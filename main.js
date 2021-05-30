@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { exit } = require('process');
-
+const plantuml = require('plantuml')
 
 const graph = 
 [
@@ -259,20 +259,25 @@ console.log(exp_array4)
 const print_graph = (graph) => {
 
 
-    let graph_text = `\`\`\`dot\ndigraph structs {\nrankdir=LR;\nnode [shape=record];\n`
-        for (var i = 0; i < graph.length; i++) {
-        
-            const node = graph[i];
-            const node_text = `${node.code} [label=" { { ${node.code} | ${node.duration()} } | { ${node.es} | ${node.ls | 'LS'}} | { ${node.ef} | ${node.lf | 'LF'} } } | slack: ${node.lf-node.ef}" ${node.ef === node.lf ? `, style=filled, fillcolor=indianred` : ""} ]; \n`
-            graph_text += node_text;
-        }
-        
-        for (var i = 0; i < graph.length; i++) {
-            const node = graph[i];
-            graph_text += `{${node.precedence.join()}} -> ${node.code} \n`;
-        }
-        graph_text += "}\n```"
-        console.log(graph_text)
+    // let graph_text = `\`\`\`dot\ndigraph structs {\nrankdir=LR;\nnode [shape=record];\n`;
+    let graph_text = `digraph structs {\nrankdir=LR;\nnode [shape=record];\n`;
+
+
+    for (var i = 0; i < graph.length; i++) {
+    
+        const node = graph[i];
+        const node_text = `${node.code} [label=" { { ${node.code} | ${node.duration()} } | { ${node.es} | ${node.ls | 'LS'}} | { ${node.ef} | ${node.lf | 'LF'} } } | slack: ${node.lf-node.ef}" ${node.ef === node.lf ? `, style=filled, fillcolor=indianred` : ""} ]; \n`
+        graph_text += node_text;
+    }
+    
+    for (var i = 0; i < graph.length; i++) {
+        const node = graph[i];
+        graph_text += `{${node.precedence.join()}} -> ${node.code} \n`;
+    }
+    graph_text += "}"
+    // console.log(graph_text)
+
+    return graph_text;
     
 }
 
@@ -380,27 +385,54 @@ const calculate_pert = (graph_original) => {
 
 
 
-for (var i = 0; i < random_number_count; i++) {
 
-    const E = graph.filter(a => a.code === 'E')[0]; // exp(14)
-    const M = graph.filter(a => a.code === 'M')[0]; // exp(28)
-    const K = graph.filter(a => a.code === 'K')[0]; // normal(13,2)
-    const N = graph.filter(a => a.code === 'N')[0]; // normal(34,5)
 
-    E.duration = () => Math.round(exp1.value[i]);
-    M.duration = () => Math.round(exp2.value[i]);
-    K.duration = () => Math.round(normal1.value[i]);
-    N.duration = () => Math.round(normal2.value[i]);
 
-    const pert_graph = calculate_pert(graph)
+const main = async () => {
 
-    print_graph(pert_graph)    
+    const complate_times = [];
+
+    for (var i = 0; i < random_number_count; i++) {
+
+        const E = graph.filter(a => a.code === 'E')[0]; // exp(14)
+        const M = graph.filter(a => a.code === 'M')[0]; // exp(28)
+        const K = graph.filter(a => a.code === 'K')[0]; // normal(13,2)
+        const N = graph.filter(a => a.code === 'N')[0]; // normal(34,5)
+    
+        E.duration = () => Math.round(exp1.value[i]);
+        M.duration = () => Math.round(exp2.value[i]);
+        K.duration = () => Math.round(normal1.value[i]);
+        N.duration = () => Math.round(normal2.value[i]);
+        console.log()
+        console.log(`$E \\approx ${E.duration()}, \\quad M \\approx ${M.duration()}, \\quad K \\approx ${K.duration()}, \\quad N \\approx ${N.duration()}$`)
+
+
+        const pert_graph = calculate_pert(graph)
+        const complate_time = Math.max(...pert_graph.map(a => a.lf));
+        complate_times.push(complate_time);
+
+
+        const graph_text = print_graph(pert_graph);
+        let graph_text_dot = `\`\`\`dot\n${graph_text}\n\`\`\``
+        console.log(graph_text_dot)
+        
+
+        const svg = await plantuml(graph_text);
+        fs.writeFileSync(`pert-${i+1}.svg`, svg);
+    }
+
+    // 
+
+    let result_table = "$\\begin{array}{cccc|c}\n\\text{E-exp}(14) & \\text{M-exp}(28) & \\text{K-normal}(13,2) & \\text{N-normal}(34,2) & \\text{complate time} \\\\ \\hline \n";
+    for (var i = 0; i < random_number_count; i++) {
+        result_table += `${Math.round(exp1.value[i])} & ${Math.round(exp2.value[i])} & ${Math.round(normal1.value[i])} & ${Math.round(normal2.value[i])} & ${complate_times[i]} \\\\ \n`
+    }
+    result_table += "\\end{array}$"
+    console.log(result_table)
 
 }
 
 
-
-
-
+main()
 
 

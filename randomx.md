@@ -76,6 +76,7 @@ Z_{8} = 11 \cdot 237 + 0 \pmod{251} = 97 & U_{8} = 97/251 = 0.386 \\
 Z_{9} = 11 \cdot 97 + 0 \pmod{251} = 63 & U_{9} = 63/251 = 0.251 \\ 
 Z_{10} = 11 \cdot 63 + 0 \pmod{251} = 191 & U_{10} = 191/251 = 0.761 \\ 
 \end{array}$
+
 rv1 - total: 4.433, avg: 0.443
 rv2 - total: 6.301, avg: 0.630
 rv3 - total: 4.172, avg: 0.417
@@ -193,6 +194,8 @@ $\begin{array}{c|c|c}
 0.841  & 0.761 &  34.203 \approx 34 \\ 
 \end{array}$
 
+$E \approx 3, \quad M \approx 30, \quad K \approx 9, \quad N \approx 33$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -245,6 +248,8 @@ Z [label=" { { Z | 0 } | { 117 | 117} | { 117 | 117 } } | slack: 0" , style=fill
 {V,U,Q,F} -> Z 
 }
 ```
+
+$E \approx 7, \quad M \approx 7, \quad K \approx 16, \quad N \approx 29$
 
 ```dot
 digraph structs {
@@ -299,6 +304,8 @@ Z [label=" { { Z | 0 } | { 122 | 122} | { 122 | 122 } } | slack: 0" , style=fill
 }
 ```
 
+$E \approx 10, \quad M \approx 22, \quad K \approx 11, \quad N \approx 44$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -351,6 +358,8 @@ Z [label=" { { Z | 0 } | { 135 | 135} | { 135 | 135 } } | slack: 0" , style=fill
 {V,U,Q,F} -> Z 
 }
 ```
+
+$E \approx 15, \quad M \approx 90, \quad K \approx 10, \quad N \approx 38$
 
 ```dot
 digraph structs {
@@ -405,6 +414,8 @@ Z [label=" { { Z | 0 } | { 179 | 179} | { 179 | 179 } } | slack: 0" , style=fill
 }
 ```
 
+$E \approx 3, \quad M \approx 23, \quad K \approx 13, \quad N \approx 37$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -457,6 +468,8 @@ Z [label=" { { Z | 0 } | { 123 | 123} | { 123 | 123 } } | slack: 0" , style=fill
 {V,U,Q,F} -> Z 
 }
 ```
+
+$E \approx 1, \quad M \approx 6, \quad K \approx 10, \quad N \approx 29$
 
 ```dot
 digraph structs {
@@ -511,6 +524,8 @@ Z [label=" { { Z | 0 } | { 117 | 117} | { 117 | 117 } } | slack: 0" , style=fill
 }
 ```
 
+$E \approx 15, \quad M \approx 100, \quad K \approx 10, \quad N \approx 39$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -563,6 +578,8 @@ Z [label=" { { Z | 0 } | { 189 | 189} | { 189 | 189 } } | slack: 0" , style=fill
 {V,U,Q,F} -> Z 
 }
 ```
+
+$E \approx 4, \quad M \approx 33, \quad K \approx 10, \quad N \approx 33$
 
 ```dot
 digraph structs {
@@ -617,6 +634,8 @@ Z [label=" { { Z | 0 } | { 117 | 117} | { 117 | 117 } } | slack: 0" , style=fill
 }
 ```
 
+$E \approx 11, \quad M \approx 27, \quad K \approx 13, \quad N \approx 34$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -670,6 +689,8 @@ Z [label=" { { Z | 0 } | { 128 | 128} | { 128 | 128 } } | slack: 0" , style=fill
 }
 ```
 
+$E \approx 45, \quad M \approx 59, \quad K \approx 13, \quad N \approx 34$
+
 ```dot
 digraph structs {
 rankdir=LR;
@@ -722,3 +743,24 @@ Z [label=" { { Z | 0 } | { 181 | 181} | { 181 | 181 } } | slack: 0" , style=fill
 {V,U,Q,F} -> Z 
 }
 ```
+$\begin{array}{cccc|c}
+\text{E-exp}(14) & \text{M-exp}(28) & \text{K-normal}(13,2) & \text{N-normal}(34,2) & \text{complate time} \\ \hline 
+3 & 30 & 9 & 33 & 117 \\ 
+7 & 7 & 16 & 29 & 122 \\ 
+10 & 22 & 11 & 44 & 135 \\ 
+15 & 90 & 10 & 38 & 179 \\ 
+3 & 23 & 13 & 37 & 123 \\ 
+1 & 6 & 10 & 29 & 117 \\ 
+15 & 100 & 10 & 39 & 189 \\ 
+4 & 33 & 10 & 33 & 117 \\ 
+11 & 27 & 13 & 34 & 128 \\ 
+45 & 59 & 13 & 34 & 181 \\ 
+\end{array}$
+
+
+
+​	
+ 
+​	
+
+
